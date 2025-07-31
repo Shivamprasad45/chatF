@@ -1,8 +1,14 @@
 "use client";
 import { useState } from "react";
+import axios from "axios";
 
 export default function SignupPage() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -11,19 +17,15 @@ export default function SignupPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      if (res.ok) {
-        alert("Signup successful!");
-      } else {
-        alert("Signup failed!");
-      }
-    } catch (error) {
-      console.error(error);
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        form
+      );
+      alert("Signup successful!");
+      console.log(res.data); // Optional
+    } catch (err: any) {
+      console.error(err.response?.data || err.message);
+      alert("Signup failed!");
     }
   };
 
@@ -48,6 +50,15 @@ export default function SignupPage() {
           name="email"
           placeholder="Email"
           value={form.email}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          value={form.phone}
           onChange={handleChange}
           className="w-full px-3 py-2 border rounded"
           required

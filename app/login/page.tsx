@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import axios from "axios";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -11,19 +12,15 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      if (res.ok) {
-        alert("Login successful!");
-      } else {
-        alert("Invalid credentials");
-      }
-    } catch (error) {
-      console.error(error);
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        form
+      );
+      alert("Login successful!");
+      console.log(res.data); // Optional: store token or redirect
+    } catch (err: any) {
+      console.error(err.response?.data || err.message);
+      alert("Login failed!");
     }
   };
 

@@ -1,10 +1,21 @@
 "use client";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
 import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:3001"); // Replace with your backend URL
+const socket = io("http://localhost:5000"); // Replace with your backend URL
 
 export default function ChatPage() {
+  const router = useRouter();
+
+  const user = sessionStorage.getItem("token");
+  console.log(user);
+  if (!user) {
+    router.push("/login");
+  }
+
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     []
@@ -12,6 +23,15 @@ export default function ChatPage() {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/message/receive")
+      .then((response) => {
+        setMessages(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching messages:", error);
+      });
+
     interface ChatMessage {
       sender: string;
       text: string;

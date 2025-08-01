@@ -1,8 +1,15 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const user = sessionStorage.getItem("token");
+  if (user) {
+    router.push("/");
+  }
+
   const [form, setForm] = useState({ email: "", password: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,7 +24,11 @@ export default function LoginPage() {
         form
       );
       alert("Login successful!");
-      console.log(res.data); // Optional: store token or redirect
+
+      sessionStorage.setItem("token", res.data); // Store token if needed
+      // Optional: store token or redirect
+      console.log(res.data);
+      window.location.reload();
     } catch (err: any) {
       console.error(err.response?.data || err.message);
       alert("Login failed!");

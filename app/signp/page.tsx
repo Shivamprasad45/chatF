@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
   const [form, setForm] = useState({
@@ -9,7 +10,7 @@ export default function SignupPage() {
     phone: "",
     password: "",
   });
-
+  const router = useRouter();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -22,7 +23,10 @@ export default function SignupPage() {
         form
       );
       alert("Signup successful!");
-      console.log(res.data); // Optional
+      router.push("/login"); // Redirect to login page after successful signup
+      console.log(res.data);
+
+      // Optional
     } catch (err: any) {
       console.error(err.response?.data || err.message);
       alert("Signup failed!");

@@ -17,7 +17,6 @@ interface Message {
   fileUrl?: string;
   fileType?: "image" | "video" | "document" | "audio";
   timestamp: Date;
-  
 }
 
 export interface SignedUrlResponse {
@@ -26,7 +25,7 @@ export interface SignedUrlResponse {
 }
 export const chatApi = createApi({
   reducerPath: "chatApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://chatdist.vercel.app/api" }),
   tagTypes: ["Groups", "Messages", "Members"],
   endpoints: (builder) => ({
     getSignedUrl: builder.query<

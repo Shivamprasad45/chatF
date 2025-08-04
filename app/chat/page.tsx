@@ -241,7 +241,7 @@ export default function ChatPage() {
 
       // First, find user by email
       const findUserResponse = await axios.get(
-        `http://localhost:5000/api/users?email=${newUserEmail}`
+        `https://chatdist.vercel.app/api/users?email=${newUserEmail}`
       );
 
       if (!findUserResponse.data || findUserResponse.data.length === 0) {

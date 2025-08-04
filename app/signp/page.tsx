@@ -19,7 +19,7 @@ export default function SignupPage() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://chatdist.vercel.app/api/auth/register",
         form
       );
       alert("Signup successful!");

@@ -9,7 +9,7 @@ export const uploadFileToS3 = async (file: File): Promise<string> => {
   try {
     // Get signed URL from backend
     const response = await axios.get<SignedUrlResponse>(
-      "http://localhost:5000/api/upload/signed-url",
+      "https://chat-f-two.vercel.app/api/upload/signed-url",
       {
         params: {
           fileName: file.name,

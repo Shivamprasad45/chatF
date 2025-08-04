@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
+
   const [form, setForm] = useState({ email: "", password: "" });
 
   useEffect(() => {
@@ -13,7 +14,7 @@ export default function LoginPage() {
     if (user) {
       router.push("/");
     }
-  }, [router]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -37,7 +38,7 @@ export default function LoginPage() {
         })
       );
 
-      router.refresh(); // Or router.push('/') to redirect
+      window.location.reload(); // Or router.push('/') to redirect
     } catch (err: any) {
       console.error(err.response?.data || err.message);
       alert("Login failed!");
@@ -75,6 +76,12 @@ export default function LoginPage() {
         >
           Login
         </button>
+        <p className="mt-4 text-center">
+          Don&apos;t have an account?{" "}
+          <a href="/signp" className="text-blue-600 hover:underline">
+            Sign Up
+          </a>
+        </p>
       </form>
     </main>
   );

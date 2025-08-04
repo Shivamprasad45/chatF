@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 
-const SOCKET_URL = "https://chat-f-two.vercel.app";
+const SOCKET_URL = "https://chatdist.vercel.app";
 
 let socket: any = null;
 
